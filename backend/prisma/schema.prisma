@@ -21,7 +21,7 @@ model User {
   email         String    @unique
   password_hash String    
   created_at    DateTime  @default(now())
-  updated_at    DateTime?
+  updated_at    DateTime  @updatedAt
 
   expenses Expense[]
   budgets  Budget[]
@@ -34,8 +34,8 @@ model Expense {
   amount      Int
   date        DateTime
   created_at  DateTime @default(now())
-  updated_at  DateTime
-  type        Type
+  updated_at  DateTime @updatedAt
+  type        ExpenseType
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String?
@@ -62,7 +62,7 @@ model Category {
   expenses Expense[]
 }
 
-enum Type {
+enum ExpenseType {
   EXPENSE
   PLANNED
 }
