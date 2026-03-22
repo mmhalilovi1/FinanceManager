@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateBudgetDTO } from './dto/createBudgetDto';
 import { UpdateBudgetDTO } from './dto/updateBudgetDto';
@@ -43,35 +43,43 @@ export class BudgetService {
         budgetId: string,
         updateBudgetDto: UpdateBudgetDTO
     ) {
-        return this.prisma.budget.update({
-            where: {
-                id: budgetId,
-                userId: userId,
-            },
-            data: {
-                limit_amount: updateBudgetDto.limit_amount,
-                month: updateBudgetDto.month,
-                year: updateBudgetDto.year,
-            },
-            select: {
-                limit_amount: true,
-                month: true,
-                year: true,
-            },
-        });
+        try {
+            return await this.prisma.budget.update({
+                where: {
+                    id: budgetId,
+                    userId: userId,
+                },
+                data: {
+                    limit_amount: updateBudgetDto.limit_amount,
+                    month: updateBudgetDto.month,
+                    year: updateBudgetDto.year,
+                },
+                select: {
+                    limit_amount: true,
+                    month: true,
+                    year: true,
+                },
+            });
+        } catch (error) {
+            throw new NotFoundException("Budget doesn't exist");
+        }
     }
 
     async deleteBudget(userId: string, budgetId: string) {
-        return this.prisma.budget.delete({
-            where: {
-                id: budgetId,
-                userId: userId,
-            },
-            select: {
-                limit_amount: true,
-                month: true,
-                year: true,
-            },
-        });
+        try {
+            return await this.prisma.budget.delete({
+                where: {
+                    id: budgetId,
+                    userId: userId,
+                },
+                select: {
+                    limit_amount: true,
+                    month: true,
+                    year: true,
+                },
+            });
+        } catch (error) {
+            throw new NotFoundException("Budget doesn't exist");
+        }
     }
 }
