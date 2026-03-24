@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateExpenseDTO } from './dto/createExpenseDto';
 import { UpdateExpenseDTO } from './dto/updateExpenseDto';
+import { GetExpensesDTO } from './dto/getExpensesDto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ExpenseService {
@@ -35,9 +37,43 @@ export class ExpenseService {
         });
     }
 
-    async getAllExpenses(userId: string) {
+    async getAllExpenses(userId: string, query: GetExpensesDTO) {
+        const {
+            sort,
+            order = 'asc',
+            from,
+            to,
+            page = 1,
+            limit = 10,
+        } = query;
+
+        const where: any = { userId };
+
+        if (from || to) {
+            where.date = {};
+            if (from) where.date.gte = new Date(from);
+            if (to) where.date.lte = new Date(to);
+        }
+
+        let orderBy: Prisma.ExpenseOrderByWithRelationInput;
+
+        if (sort) {
+            orderBy = {
+                [sort]: order ?? 'asc',
+            };
+        } else {
+            orderBy = {
+                date: 'desc',
+            };
+        }
+
+        const skip = (page - 1) * limit;
+         
         return this.prisma.expense.findMany({
-            where: { userId },
+            where,
+            orderBy,
+            skip,
+            take: limit,
             select: {
                 title: true,
                 description: true,

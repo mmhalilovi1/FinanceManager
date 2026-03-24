@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ExpenseModule } from './expense/expense.module';
 import { CategoryModule } from './category/category.module';
 import { BudgetModule } from './budget/budget.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { BudgetModule } from './budget/budget.module';
     ExpenseModule,
     CategoryModule,
     BudgetModule,
+    StatsModule,
   ],
   controllers: [],
   providers: [],

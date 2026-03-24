@@ -1,9 +1,10 @@
-import { Controller, Post, UseGuards, Body, Get, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Get, Param, Patch, Delete, Query } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { GetUser } from 'src/user/user.decorator';
 import { CreateExpenseDTO } from './dto/createExpenseDto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { UpdateExpenseDTO } from './dto/updateExpenseDto';
+import { GetExpensesDTO } from './dto/getExpensesDto';
 
 @Controller('expense')
 export class ExpenseController {
@@ -23,8 +24,11 @@ export class ExpenseController {
     // GET /expense
     @Get()
     @UseGuards(AuthGuard)
-    getAllExpenses(@GetUser() user) {
-        return this.expenseService.getAllExpenses(user.userId);
+    getAllExpenses(
+        @GetUser() user,
+        @Query() query: GetExpensesDTO
+    ) {
+        return this.expenseService.getAllExpenses(user.userId, query);
     }
 
     // GET /expense/:id
