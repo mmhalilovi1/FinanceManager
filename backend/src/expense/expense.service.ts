@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateExpenseDTO } from './dto/createExpenseDto';
 import { UpdateExpenseDTO } from './dto/updateExpenseDto';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class ExpenseService {
@@ -50,7 +49,7 @@ export class ExpenseService {
     }
 
     async getSingleExpense(userId: string, expenseId: string) {
-        return this.prisma.expense.findFirst({
+        const expense =  await this.prisma.expense.findFirst({
             where: {
                 id: expenseId,
                 userId,
@@ -63,6 +62,10 @@ export class ExpenseService {
                 type: true,
             },
         });
+
+        if(!expense) throw new NotFoundException("Expense doesn't exist");
+
+        return expense;
     }
     
     async updateExpense(
@@ -70,42 +73,50 @@ export class ExpenseService {
         expenseId: string,
         updateExpense: UpdateExpenseDTO
     ) {
-        return this.prisma.expense.update({
-            where: {
-                id: expenseId,
-                userId: userId,
-            },
-            data: {
-                title: updateExpense.title,
-                description: updateExpense.description,
-                amount: updateExpense.amount,
-                date: updateExpense.date,
-                type: updateExpense.type,
-                categoryId: updateExpense.category_id,
-            },
-            select: {
-                title: true,
-                description: true,
-                amount: true,
-                date: true,
-                type: true,
-            },
-        });
+        try {
+            return await this.prisma.expense.update({
+                where: {
+                    id: expenseId,
+                    userId: userId,
+                },
+                data: {
+                    title: updateExpense.title,
+                    description: updateExpense.description,
+                    amount: updateExpense.amount,
+                    date: updateExpense.date,
+                    type: updateExpense.type,
+                    categoryId: updateExpense.category_id,
+                },
+                select: {
+                    title: true,
+                    description: true,
+                    amount: true,
+                    date: true,
+                    type: true,
+                },
+            });
+        } catch (error) {
+            throw new NotFoundException("Expense doesn't exist");
+        }
     }
 
     async deleteExpense(userId: string, expenseId: string) {
-        return this.prisma.expense.delete({
-            where: {
-                id: expenseId,
-                userId: userId,
-            },
-            select: {
-                title: true,
-                description: true,
-                amount: true,
-                date: true,
-                type: true,
-            },
-        });
+        try {
+            return await this.prisma.expense.delete({
+                where: {
+                    id: expenseId,
+                    userId: userId,
+                },
+                select: {
+                    title: true,
+                    description: true,
+                    amount: true,
+                    date: true,
+                    type: true,
+                },
+            });
+        } catch (error) {
+            throw new NotFoundException("Expense doesn't exist");
+        }
     }
 }
