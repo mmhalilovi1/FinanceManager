@@ -45,10 +45,13 @@ export class AuthService {
             },
         });
     
-        if(!user || user.password_hash != loginDto.password_hash) {
-            throw new NotFoundException("Invalid data");
-        }
+        const isPasswordValid = user && await argon2.verify(
+            user.password_hash,
+            loginDto.password_hash
+        );
 
+        if(!isPasswordValid) throw new NotFoundException("Invalid data");
+        
         return {
             userId: user.id,
             username: user.name,
