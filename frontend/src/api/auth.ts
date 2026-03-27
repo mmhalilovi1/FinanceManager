@@ -19,12 +19,7 @@ export const register = async (data: RegisterDTO) => {
     return response.data;
 }
 
-export const getMe = async (token: string) => {
-    const response = await api.get("/auth/me", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
+export const getMe = async () => {
+    const response = await api.get("/auth/me");
     return response.data;
 }
