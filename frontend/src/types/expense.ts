@@ -19,8 +19,10 @@ export interface CreateExpenseDTO {
 }
 
 export interface GetExpensesParams {
-    sort?: "amount" | "date";
-    order?: "asc" | "desc";
+    // sort?: "amount" | "date";
+    // order?: "asc" | "desc";
+    sort?: string;
+    order?: string;
     from?: string;
     to?: string;
     page?: number;

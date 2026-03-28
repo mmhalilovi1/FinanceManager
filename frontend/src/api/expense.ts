@@ -2,8 +2,15 @@ import type { CreateExpenseDTO, Expense, GetExpensesParams } from "../types/expe
 import { api } from "./axios";
 
 export const getExpenses = async (params?: GetExpensesParams): Promise<Expense[]> => {
+    const cleanedParams = params ? Object.fromEntries(
+            Object.entries(params).filter(
+            ([_, value]) => value !== "" && value !== undefined
+            )
+        )
+    : undefined;
+
     const response = await api.get("/expense", {
-        params,
+        params: cleanedParams,
     });
 
     return response.data;

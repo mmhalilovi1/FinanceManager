@@ -9,6 +9,7 @@ export class CategoryService {
     async getAllCategories() {
         return this.prisma.category.findMany({
             select: {
+                id: true,
                 name: true,
                 tag: true,
             },

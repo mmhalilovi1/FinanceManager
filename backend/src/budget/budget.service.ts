@@ -12,6 +12,7 @@ export class BudgetService {
         return this.prisma.budget.findMany({
             where: { userId },
             select: {
+                id: true,
                 limit_amount: true,
                 month: true,
                 year: true,
@@ -31,6 +32,7 @@ export class BudgetService {
                 }
             },
             select: {
+                id: true,
                 limit_amount: true,
                 month: true,
                 year: true,
@@ -55,6 +57,7 @@ export class BudgetService {
                     year: updateBudgetDto.year,
                 },
                 select: {
+                    id: true,
                     limit_amount: true,
                     month: true,
                     year: true,
@@ -73,6 +76,7 @@ export class BudgetService {
                     userId: userId,
                 },
                 select: {
+                    id: true,
                     limit_amount: true,
                     month: true,
                     year: true,

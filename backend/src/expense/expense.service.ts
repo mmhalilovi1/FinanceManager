@@ -28,6 +28,7 @@ export class ExpenseService {
                 },
             },
             select: {
+                id: true,
                 title: true,
                 description: true,
                 amount: true,
@@ -75,6 +76,7 @@ export class ExpenseService {
             skip,
             take: limit,
             select: {
+                id: true,
                 title: true,
                 description: true,
                 amount: true,
@@ -91,6 +93,7 @@ export class ExpenseService {
                 userId,
             },
             select: {
+                id: true,
                 title: true,
                 description: true,
                 amount: true,
@@ -124,6 +127,7 @@ export class ExpenseService {
                     categoryId: updateExpense.category_id,
                 },
                 select: {
+                    id: true,
                     title: true,
                     description: true,
                     amount: true,
@@ -144,6 +148,7 @@ export class ExpenseService {
                     userId: userId,
                 },
                 select: {
+                    id: true,
                     title: true,
                     description: true,
                     amount: true,
