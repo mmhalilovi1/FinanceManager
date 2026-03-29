@@ -90,3 +90,40 @@ The backend is structured into modular components:
   * Database access layer using Prisma ORM
 
 ---
+
+# Installation & Setup
+
+## 1. Clone the repository
+git clone <your-repo-url>
+cd finance-manager
+
+## 2. Setup Backend
+cd backend
+npm install
+### Environment variables (.env)
+
+Create a `.env` file in the `backend` folder:
+DATABASE_URL=your_postgresql_connection
+JWT_SECRET=your_secret_key
+
+### Run migrations
+npx prisma migrate dev
+
+
+### Start backend server
+
+
+npm run start:dev
+
+
+## 3. Setup Frontend
+
+
+cd frontend
+npm install
+
+
+### Start frontend
+
+
+npm run dev
