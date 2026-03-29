@@ -4,6 +4,7 @@ import type { Expense, ExpenseType } from "../types/expense";
 import { createExpense, deleteExpense, getExpenses, updateExpense } from "../api/expense";
 import type { Category } from "../types/category";
 import { getCategories } from "../api/category";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
     title: string;
@@ -16,6 +17,7 @@ type FormValues = {
 
 const DashboardPage = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -139,10 +141,17 @@ const DashboardPage = () => {
                     Welcome, {user?.username}
                 </h1>
 
-                <button onClick={logout}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg">
-                    Logout
-                </button>
+                <div className="flex justify-end gap-2">
+                    <button onClick={() => navigate("/stats")} 
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                        Monthly stats
+                    </button>
+
+                    <button onClick={logout}
+                    className="bg-red-500 text-white px-4 py-2 rounded-lg">
+                        Logout
+                    </button>
+                </div>
             </div>
 
             <div className="mb-4 flex gap-4 flex-wrap">

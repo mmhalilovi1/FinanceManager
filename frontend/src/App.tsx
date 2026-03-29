@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
+import MonthlyStatsPage from './pages/MothlyStatsPage';
 
 function App() {
   return (
@@ -17,6 +18,11 @@ function App() {
               <DashboardPage />
             </ProtectedRoute>
           } />
+          <Route path='/stats' element={
+            <ProtectedRoute>
+              <MonthlyStatsPage />
+            </ProtectedRoute>
+          }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
