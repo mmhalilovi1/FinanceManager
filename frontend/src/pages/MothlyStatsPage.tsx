@@ -31,17 +31,14 @@ const MonthlyStatsPage = () => {
                         key={index}
                         className="bg-white shadow-md rounded-2xl p-5 border border-gray-100"
                     >
-                        {/* Month */}
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">
                             {stat.month}
                         </h2>
 
-                        {/* Amount */}
                         <p className="text-2xl font-bold text-blue-600 mb-4">
                             {stat.amount}$
                         </p>
 
-                        {/* Categories */}
                         <div className="space-y-2">
                             {stat.categories.map((cat, i) => (
                                 <div
