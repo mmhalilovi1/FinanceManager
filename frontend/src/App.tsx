@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import MonthlyStatsPage from './pages/MothlyStatsPage';
+import BudgetPage from './pages/BudgetPage';
 
 function App() {
   return (
@@ -21,6 +22,11 @@ function App() {
           <Route path='/stats' element={
             <ProtectedRoute>
               <MonthlyStatsPage />
+            </ProtectedRoute>
+          }/>
+          <Route path='/budgets' element={
+            <ProtectedRoute>
+              <BudgetPage />
             </ProtectedRoute>
           }/>
         </Routes>
