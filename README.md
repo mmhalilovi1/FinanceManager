@@ -57,7 +57,7 @@ A full-stack Finance Manager application that helps users track expenses, manage
 
 ---
 
-## 🏗️ Backend Architecture
+## Backend Architecture
 
 The backend is structured into modular components:
 
